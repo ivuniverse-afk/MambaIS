@@ -4,11 +4,12 @@ Implementation of **MambaIS**. The training pipeline implements centered sparse 
 
 ## Installation
 
-The tested setup uses Ubuntu 22.04, Python 3.10, CUDA 12.1, and PyTorch 2.2. Create a clean environment and install the fully pinned dependency set:
+The setup uses Ubuntu 22.04, Python 3.10, CUDA 12.1, and PyTorch 2.2. Create a clean environment and install the fully pinned dependency set:
 
 ```bash
 conda create -n mambais python=3.10 -y
 conda activate mambais
+git clone https://github.com/ivuniverse-afk/MambaIS.git
 cd MambaIS
 pip install --upgrade pip==24.0 setuptools==69.5.1 wheel==0.43.0
 pip install torch==2.2.2+cu121 torchvision==0.17.2+cu121 \

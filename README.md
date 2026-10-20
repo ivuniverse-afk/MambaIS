@@ -1,6 +1,7 @@
 # MambaIS: Bridging Mamba and 3D Point Clouds: Efficient Instance Segmentation via Implicit State Space Models
 
-Implementation of **MambaIS**. The training pipeline implements centered sparse voxel embedding, hierarchical 3D Hilbert serialization, implicit multi-directional state-space scans, and the bidirectional Mamba instance-query aggregator.
+Implementation of **MambaIS**. We propose MambaIS, a novel and efficient Mamba-centered framework for 3D instance segmentation that integrates sparse local geometric encoding with selective state-space modeling for global context learning.}
+To bridge the structural gap between 1D SSMs and 3D geometry, we introduce Sparse Convolutional Embedding (SCE) equipped with a hierarchical 3D Hilbert scanning strategy, mapping unstructured points into locally coherent sequences. To efficiently capture global spatial contexts, we design an Implicit Multi-directional Scan (IMS) module that leverages coordinate transposition, eliminating the substantial memory overhead of standard multi-branch scanning. Furthermore, we develop the Mamba-based Instance Query Aggregator (MIQA), an end-to-end decoding mechanism that iteratively refines instance queries and voxel features via bidirectional SSMs, thereby bypassing heuristic clustering intermediate steps. 
 
 ## Installation
 

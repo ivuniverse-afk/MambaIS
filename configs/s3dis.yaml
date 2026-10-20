@@ -1,0 +1,14 @@
+seed: 42
+data:
+  root: data/s3dis
+  train_split: train_area5
+  val_split: Area_5
+  label_file: segment.npy
+  voxel_size: 0.02
+  max_points: 250000
+  valid_class_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  class_names: [ceiling, floor, wall, beam, column, window, door, table, chair, sofa, bookcase, board, clutter]
+model: {widths: [64, 96, 128, 192], depths: [2, 2, 3, 3], decoder_width: 256, miqa_layers: 4, train_queries: 400, eval_queries: 200, state_size: 16}
+loss: {class_weight: 0.5, bce_weight: 1.0, dice_weight: 1.0, no_object: 0.1, auxiliary: true}
+train: {epochs: 200, batch_size: 16, workers: 8, lr: 0.001, weight_decay: 0.0001, amp: true, grad_clip: 1.0, log_every: 10, save_every: 10}
+

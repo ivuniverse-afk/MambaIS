@@ -1,0 +1,14 @@
+seed: 42
+data:
+  root: data/stpls3d
+  train_split: train
+  val_split: val
+  label_file: segment.npy
+  voxel_size: 0.03
+  max_points: 250000
+  valid_class_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  class_names: [ground, building, low_vegetation, medium_vegetation, high_vegetation, vehicle, truck, aircraft, military_vehicle, bike, motorcycle, light_pole, street_sign, clutter]
+model: {widths: [64, 96, 128, 192], depths: [2, 2, 3, 3], decoder_width: 256, miqa_layers: 4, train_queries: 400, eval_queries: 200, state_size: 16}
+loss: {class_weight: 0.5, bce_weight: 1.0, dice_weight: 1.0, no_object: 0.1, auxiliary: true}
+train: {epochs: 200, batch_size: 16, workers: 8, lr: 0.001, weight_decay: 0.0001, amp: true, grad_clip: 1.0, log_every: 10, save_every: 10}
+

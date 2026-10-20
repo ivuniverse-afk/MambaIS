@@ -5,7 +5,7 @@ To bridge the structural gap between 1D SSMs and 3D geometry, we introduce Spars
 
 ## Installation
 
-The setup uses Ubuntu 22.04, Python 3.10, CUDA 12.1, and PyTorch 2.2. Create a clean environment and install the fully pinned dependency set:
+We recommend using Ubuntu 22.04, Python 3.10, CUDA 12.1, and PyTorch 2.2 to create a clean environment and install a fully pinned set of dependencies.
 
 ```bash
 conda create -n mambais python=3.10 -y
@@ -32,7 +32,7 @@ python -c "import torch, mamba_ssm, mambais; print(torch.__version__, torch.cuda
 
 ## Datasets
 
-This repository does not download datasets or redistribute their terms-protected files. Request and download each dataset from its official page:
+We do not provide dataset downloads, nor do we redistribute their terms-protected files. Please request and download each dataset from its official page.
 
 - [ScanNet v2](http://www.scan-net.org/): accept its terms and use the official download script. MambaIS uses the 20-class instance segmentation labels.
 - [S3DIS](https://cvg-data.inf.ethz.ch/s3dis/): request access and download the aligned version. Area 5 is the default validation split; the other five areas form `train_area5`.

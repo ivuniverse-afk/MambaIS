@@ -29,8 +29,6 @@ Confirm the installation:
 python -c "import torch, mamba_ssm, mambais; print(torch.__version__, torch.cuda.is_available())"
 ```
 
-When `mamba-ssm` is unavailable, the code uses a small PyTorch recurrent selective-state-space implementation so CPU forward passes and pipeline debugging remain possible. Install the pinned CUDA packages for training and reported-speed evaluation.
-
 ## Datasets
 
 This repository does not download datasets or redistribute their terms-protected files. Request and download each dataset from its official page:
@@ -67,7 +65,7 @@ ln -s /absolute/path/to/processed_stpls3d data/stpls3d
 
 ## Training
 
-Paper defaults are encoded in the configs: a 2 cm voxel for ScanNet v2 and S3DIS, 3 cm for STPLS3D, at most 250,000 input points, 400 training queries, four MIQA layers, 200 epochs, AdamW with learning rate `1e-3` and weight decay `1e-4`, and the weighted classification + BCE + Dice objective. The published batch size is 16 on one RTX 4090; reduce `train.batch_size` when GPU memory is smaller.
+Configs: a 2 cm voxel for ScanNet v2 and S3DIS, 3 cm for STPLS3D, at most 250,000 input points, 400 training queries, four MIQA layers, 200 epochs, AdamW with learning rate `1e-3` and weight decay `1e-4`, and the weighted classification + BCE + Dice objective. The published batch size is 16 on one RTX 4090; reduce `train.batch_size` when GPU memory is smaller.
 
 ```bash
 # ScanNet v2
@@ -101,7 +99,7 @@ bash scripts/eval.sh configs/s3dis.yaml outputs/s3dis_area5/last.pt
 bash scripts/eval.sh configs/stpls3d.yaml outputs/stpls3d/last.pt
 ```
 
-The evaluator reports mAP averaged over IoU thresholds 0.50:0.05:0.95, AP50, and AP25. Prediction confidence and binary-mask thresholds can be controlled explicitly:
+Prediction confidence and binary-mask thresholds can be controlled explicitly:
 
 ```bash
 python tools/evaluate.py \

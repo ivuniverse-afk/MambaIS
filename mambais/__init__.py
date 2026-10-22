@@ -3,4 +3,3 @@
 from .model.network import MambaIS
 
 __all__ = ["MambaIS"]
-

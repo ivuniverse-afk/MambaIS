@@ -1,5 +1,8 @@
 """Selective sequence mixer with an official Mamba kernel and debug fallback."""
 
+import os
+import warnings
+
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -12,6 +15,7 @@ except (ImportError, OSError):
 
 class RecurrentSelectiveSSM(nn.Module):
     """Small linear recurrent fallback; intended for CPU tests, not benchmarks."""
+
     def __init__(self, width, state_size=16):
         super().__init__()
         self.state_size = state_size
@@ -33,9 +37,23 @@ class RecurrentSelectiveSSM(nn.Module):
 class SelectiveMixer(nn.Module):
     def __init__(self, width, state_size=16, conv_width=4, expansion=2):
         super().__init__()
-        self.impl = (Mamba(d_model=width, d_state=state_size,
-                           d_conv=conv_width, expand=expansion)
-                     if Mamba is not None else RecurrentSelectiveSSM(width, state_size))
+        if Mamba is None:
+            if os.environ.get("MAMBAIS_DEBUG_SSM") != "1":
+                raise ImportError(
+                    "mamba-ssm is required. Set MAMBAIS_DEBUG_SSM=1 only for CPU smoke tests; the fallback is not Mamba."
+                )
+            warnings.warn(
+                "Using a debug recurrence, not the paper's selective SSM.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+        self.impl = (
+            Mamba(
+                d_model=width, d_state=state_size, d_conv=conv_width, expand=expansion
+            )
+            if Mamba is not None
+            else RecurrentSelectiveSSM(width, state_size)
+        )
 
     def forward(self, x):
         return self.impl(x)
@@ -43,6 +61,7 @@ class SelectiveMixer(nn.Module):
 
 class SequenceOperator(nn.Module):
     """Linear -> depth-wise local context -> selective SSM, i.e. M(X)."""
+
     def __init__(self, width, state_size=16):
         super().__init__()
         self.linear = nn.Linear(width, width)
@@ -53,4 +72,3 @@ class SequenceOperator(nn.Module):
         x = self.linear(x)
         x = F.silu(self.local(x.transpose(1, 2)).transpose(1, 2))
         return self.ssm(x)
-
